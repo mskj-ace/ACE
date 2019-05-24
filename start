@@ -1,0 +1,18 @@
+import xlrd
+
+data = xlrd.open_workbook('/Users/dujia/mswork/js/jst/basic_info.xlsx')
+
+tables = data.sheets()[0]
+
+nrows = tables.nrows
+print(nrows)
+
+ncols = tables.ncols
+print(ncols)
+
+rows = tables.row_values(0)
+print(rows)
+
+rows = tables.row_values(1)
+print(rows)
+
