@@ -2,8 +2,11 @@ import csv
 import os
 import sys
 import json
+import credit_score as cs
+import bussiness_data as bd
 
-
+bussiness = bd.load_data()
+bussiness.da
 
 # csv_file = csv.reader(open('/Users/dujia/mswork/js/jst/datasets.csv','rU'))
 # print(csv_file)
@@ -28,16 +31,4 @@ reader = [each for each in csv.DictReader(csvfile, delimiter='\t')]  # 这里设
 # j = json.dumps(reader)
 #
 file_handle = open('/Users/dujia/PycharmProjects/mskjjs/result.txt', mode='w')
-# file_handle.write(j)
 
-# print(j)
-
-# row = reader[0]
-# print(row)
-# print(row['ANN_DT'])
-
-for row in reader:
-    print(row['S_INFO_COMPNAME'] + ' ' + row['B_INFO_CREDITRATING'] + ' '
-          + row['REPORT_PERIODB'] + ' ' + row['TOT_LIAB'] + ' ' + row['TOT_CUR_ASSETS'])
-    file_handle.writelines(row['S_INFO_COMPNAME'] + ' ' + row['B_INFO_CREDITRATING'] + '\n')
-csvfile.close()
