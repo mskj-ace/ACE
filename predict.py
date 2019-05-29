@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 
 bussiness = bd.load_data()
-print('data', bussiness.data)
+# print('data', bussiness.data)
 
 X = bussiness.data
 
@@ -12,14 +12,14 @@ y = bussiness.target
 
 print(X.shape)
 print(y)
-
+#
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=666)
-
+#
 lin_reg = LinearRegression()
 lin_reg.fit(X_train, y_train)
-print(lin_reg.coef_)
-
-
+# print(lin_reg.coef_)
+#
+#
 y_predict = lin_reg.predict(X_test)
 print("y_predict", y_predict)
 

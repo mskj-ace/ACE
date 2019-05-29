@@ -8,6 +8,8 @@ from os import environ, listdir, makedirs
 from os.path import dirname, exists, expanduser, isdir, join, splitext
 import hashlib
 import credit_score as cs
+import fieldinfo as fi
+import re
 
 
 class Bunch(dict):
@@ -39,6 +41,7 @@ class Bunch(dict):
 
 
 def load_data():
+    non_decimal = re.compile(r'[^\d.]+')
     module_path = dirname(__file__)
     print(module_path)
 
@@ -52,7 +55,9 @@ def load_data():
     #
     # reader = [each for each in csv.DictReader(csvfile, delimiter='\t')]
 
-    data_file_name = join(module_path, 'datasets.csv')
+    fin = fi.params  # loadFinancialInfo()
+
+    data_file_name = join(module_path, 'data', 'datasets.csv')
     with open(data_file_name) as f:
         # [each for each in csv.DictReader(f, delimiter='\t')]  #
         data_file = np.asarray(
@@ -62,18 +67,27 @@ def load_data():
         temp = data_file[0]  # data_file  #
         # temp.keys
         # print(temp)
-        feature_names = np.asarray([each for each in temp.keys()])
+
+        t = []
+        for each in temp.keys():
+            if each in fin:
+                t.append(each)
+
+        feature_names = np.asarray(t)  #
         n_samples = data_file.size
-        n_features = feature_names.size
+        n_features = feature_names.size  # feature_names.size
         # print(n_samples, n_features)
-        data = np.empty((n_samples, 2))
+        data = np.empty((n_samples, n_features))
         target = np.empty((n_samples))
+        # print(feature_names)
 
         for i, d in enumerate(data_file):
-            q = remoteNull(d['TOT_ASSETS'])
-            q1 = remoteNull(d['OTHER_CASH_PAY_RAL_INV_ACT'])
-            # print('p', i, q, q1)
-            data[i] = np.asarray([q, q1], dtype=np.float64)
+
+            t = []
+            for k in feature_names:
+                t.append(remoteNull(non_decimal.sub('', d[k])))
+
+            data[i] = np.asarray(t, dtype=np.float64)
             score = d['B_INFO_CREDITRATING']
             # print(score)
             target[i] = np.asarray(cs.getRatingToScore(score), dtype=np.int)
@@ -89,5 +103,7 @@ def load_data():
 
 def remoteNull(val):
     if val == '(null)':
+        val = 0
+    if val == '':
         val = 0
     return val

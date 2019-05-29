@@ -5,8 +5,21 @@ import json
 import credit_score as cs
 import bussiness_data as bd
 
-bussiness = bd.load_data()
-bussiness.da
+import re
+
+from string import punctuation
+non_decimal = re.compile(r'[^\d.]+')
+
+str = "《三国演义》中的“水镜先生”是司马徽rewr56585622"
+add_punc = '0123456789'  # 自定义--数字
+all_punc = punctuation + add_punc
+temp = re.sub('[a-zA-Z]', '', str)
+temp = filter(lambda ch: ch in '0123456789.', str)
+temp = non_decimal.sub('',str)
+print(temp)
+
+# bussiness = bd.load_data()
+# bussiness.da
 
 # csv_file = csv.reader(open('/Users/dujia/mswork/js/jst/datasets.csv','rU'))
 # print(csv_file)
@@ -22,13 +35,12 @@ bussiness.da
 #         print(dict[line])
 #     else: break
 
-cwd = os.getcwd()
-print("Current folder is %s" % (cwd))
+# cwd = os.getcwd()
+# print("Current folder is %s" % (cwd))
+#
+# csvfile = open(cwd + '/datasets.csv', 'r')
 
-csvfile = open(cwd + '/datasets.csv', 'r')
-
-reader = [each for each in csv.DictReader(csvfile, delimiter='\t')]  # 这里设置分号为分隔符
+# reader = [each for each in csv.DictReader(csvfile, delimiter='\t')]  # 这里设置分号为分隔符
 # j = json.dumps(reader)
 #
-file_handle = open('/Users/dujia/PycharmProjects/mskjjs/result.txt', mode='w')
-
+# file_handle = open('/Users/dujia/PycharmProjects/mskjjs/result.txt', mode='w')
