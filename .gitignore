@@ -3,5 +3,5 @@ venv/*
 .idea/*
 *.json
 *.txt
-*.csv
+#*.csv
 *.pyc

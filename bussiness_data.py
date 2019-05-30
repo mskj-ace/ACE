@@ -79,10 +79,10 @@ def load_data():
         # print(n_samples, n_features)
         data = np.empty((n_samples, n_features))
         target = np.empty((n_samples))
+        names = np.empty((n_samples))
         # print(feature_names)
 
         for i, d in enumerate(data_file):
-
             t = []
             for k in feature_names:
                 t.append(remoteNull(non_decimal.sub('', d[k])))
@@ -91,6 +91,7 @@ def load_data():
             score = d['B_INFO_CREDITRATING']
             # print(score)
             target[i] = np.asarray(cs.getRatingToScore(score), dtype=np.int)
+            names[i] = np.asarray(d['S_INFO_COMPNAME'])
 
         # print(n_samples)
         # print(n_features)
@@ -98,7 +99,7 @@ def load_data():
         print(data)
 
         print(target)
-    return Bunch(data=data, target=target)
+    return Bunch(data=data, target=target, names=names)
 
 
 def remoteNull(val):

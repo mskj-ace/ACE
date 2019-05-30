@@ -17,9 +17,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=666)
 #
 lin_reg = LinearRegression()
 lin_reg.fit(X_train, y_train)
-# print(lin_reg.coef_)
-#
-#
+
 y_predict = lin_reg.predict(X_test)
 print("y_predict", y_predict)
 
