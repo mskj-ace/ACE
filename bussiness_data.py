@@ -40,24 +40,22 @@ class Bunch(dict):
         pass
 
 
-def load_data():
+def load_data_sets():
+    return load_data('datasets.csv')
+
+
+def load_validate_sets():
+    return load_data('validate_datasets.csv')
+
+
+def load_data(filename):
     non_decimal = re.compile(r'[^\d.]+')
     module_path = dirname(__file__)
     print(module_path)
 
-    # fdescr_name = join(module_path, 'datasets.csv')
-    # print(fdescr_name)
-    # with open(fdescr_name) as f:
-    #     descr_text = f.read()
-    # print(descr_text)
-
-    # csvfile = open(cwd + '/datasets.csv', 'r')
-    #
-    # reader = [each for each in csv.DictReader(csvfile, delimiter='\t')]
-
     fin = fi.params  # loadFinancialInfo()
 
-    data_file_name = join(module_path, 'data', 'datasets.csv')
+    data_file_name = join(module_path, 'data', filename)
     with open(data_file_name) as f:
         # [each for each in csv.DictReader(f, delimiter='\t')]  #
         data_file = np.asarray(
@@ -75,7 +73,7 @@ def load_data():
 
         feature_names = np.asarray(t)  #
         n_samples = data_file.size
-        n_features = feature_names.size  # feature_names.size
+        n_features = feature_names.size
         # print(n_samples, n_features)
         data = np.empty((n_samples, n_features))
         target = np.empty((n_samples))
@@ -91,10 +89,7 @@ def load_data():
             score = d['B_INFO_CREDITRATING']
             # print(score)
             target[i] = np.asarray(cs.getRatingToScore(score), dtype=np.int)
-            names[i] = np.asarray(d['S_INFO_COMPNAME'])
-
-        # print(n_samples)
-        # print(n_features)
+            # names[i] = np.asarray(d['S_INFO_COMPNAME'])
 
         print(data)
 
